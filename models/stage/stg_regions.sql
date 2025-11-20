@@ -1,4 +1,7 @@
-{{ config(alias = 'stage_regions') }}
+{{ config(alias = 'stage_regions',
+    pre_hook = ["use warehouse TRANSFORM_WH"],
+    post_hook = ["select * from ANALYTICS.DBT_AN.STG_REGIONS"]
+) }}
 
 
 with region as (
