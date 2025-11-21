@@ -15,7 +15,7 @@ models:
                 store_failures: true
                 schema: error
               arguments:
-                values: ['ASIA', 'AFRICA', 'AMERICA','EUROPE','MIDDLE EAST','SOUTH EAST']
+                values: ['ASIA', 'AFRICA', 'AMERICA', 'EUROPE', 'MIDDLE EAST', 'SOUTH EAST']
     config:
       group: sales
 
@@ -44,13 +44,13 @@ models:
                 field: region_id
       - name: updated_at
         data_type: timestamp
-      
+
 
     config:
       group: sales
-      contract: 
-        enforced: true 
-        
+      contract:
+        enforced: true
+
   - name: stg_customers
     config:
       group: sales
@@ -63,10 +63,11 @@ models:
       - name: nation_id
         data_tests:
           - relationships:
-              to: ref('stg_nations')
-              field: nation_id
               config:
                 store_failures: true
+              arguments:
+                to: ref('stg_nations')
+                field: nation_id
   - name: stg_orders
     columns:
       - name: order_id
@@ -77,10 +78,12 @@ models:
       - name: customer_id
         data_tests:
           - relationships:
-              to: ref('stg_customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
               config:
                 store_failures: true
+
       - name: status_code
         data_tests:
           - accepted_values:
@@ -96,4 +99,5 @@ models:
 seeds:
   - name: suppliers
     config:
-      +alias: suppliers_name
+      meta:
+        +alias: suppliers_name
