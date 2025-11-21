@@ -39,9 +39,8 @@
 select EMPLOYEE_NAME from stg_employees
 {% endmacro %}
 
-{% set table_name = ref('stg_employees') %}
 
-{% set results = run_query("select EMPLOYEE_NAME from {{ table_name }}") %}
+
 
 
 {% macro unload() %}
