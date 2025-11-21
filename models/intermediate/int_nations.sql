@@ -1,9 +1,9 @@
-{{ config(materialized='incremental', unique_key='nation_id', on_schema_change='sync_all_columns') }}
+{{ config(materialized='incremental', unique_key='nation_id') }}
 
 with
     nation as (
-        select nation_id, region_id, name, comment, jodo_col, updated_at
-        from {{ ref("stg_nations") }} as s
+        select nation_id, region_id, name, current_timestamp() as updated_at
+        from {{ ref("stg_nations") }}
 
         {% if is_incremental() %}
             where
