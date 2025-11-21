@@ -1,11 +1,7 @@
 {{ config(
     materialized='table',
+
     
-    (# pre_hook = [
-        before_begin("use warehouse test_wh"),
-        "select * from SOURCEDB.MK_MALL.REGIONS"
-    ],
-    post_hook = ["select * from ANALYTICS.DBT_G_DBT.STAGE_REGIONS"] #)
 
 ) }}
 
@@ -24,6 +20,7 @@ from {{ source ('src', 'customers') }}
 )
 
 select * from customer
+
 
 
 
