@@ -1,0 +1,32 @@
+mkmall:
+  outputs:
+    dev:
+      account: ASB96276
+      database: ANALYTICS
+      password: Sachin$123
+      role: ANALYTICSENGINEER
+      schema: dbt_aadi
+      threads: 3
+      type: snowflake
+      user: sachin
+      warehouse: TRANSFORM_WH
+  target: dev
+
+dbt_cloud_oct:
+  outputs:
+    dev:
+      account: ASB96276
+      database: ANALYTICS
+      password: Sachin$123
+      role: ANALYTICSENGINEER
+      schema: dbt_an
+      threads: 3
+      type: snowflake
+      user: sachin
+      warehouse: TRANSFORM_WH
+  target: dev
+
+
+
+
+
