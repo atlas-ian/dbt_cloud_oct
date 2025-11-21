@@ -15,8 +15,8 @@ sources:
       - name: partsupps
     config:
       freshness:
-        warn_after: { count: 1, period: day }
-        error_after: { count: 1, period: day }
+        warn_after: { count: 3, period: day }
+        error_after: { count: 3, period: day }
       loaded_at_field: o_orderdate::timestamp_ntz
 
   - name: src1
