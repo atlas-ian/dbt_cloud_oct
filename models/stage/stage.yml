@@ -47,6 +47,7 @@ models:
               to: ref('stg_regions')
               field: region_id
         data_type: int
+        
   - name: stg_customers
     config:
       group: sales
@@ -83,7 +84,7 @@ models:
               config:
                 store_failures: true
               arguments:
-                values: ["F", "O", "P"]
+                values: ["F", "O", "P", "B"]
   - name: stg_line_items
     description: Table with all line item information
     columns:
