@@ -1,52 +1,55 @@
 models:
   - name: stg_regions
-    description: Table with all region information.
+    description: Table with all region information
     columns:
       - name: region_id
-        description: '{{doc("primary_key")}}'
+        description: "{{ doc('primary_key') }}"
         data_tests:
-          - not_null
           - unique
-      - name: region_name
+          - not_null
+      - name: name
+        description: Region name
         data_tests:
           - accepted_values:
+              config:
+                store_failures: true
+                schema: error
               arguments:
-                values:
-                  [
-                    "AFRICA",
-                    "AMERICA",
-                    "ASIA",
-                    "MIDDLE EAST",
-                    "SOUTH EAST",
-                    "EUROPE",
-                  ]
-                config:
-                  store_failures: true
-                  schema: error
-  - name: stg_nations
+                values: ['ASIA', 'AFRICA', 'AMERICA','EUROPE','MIDDLE EAST','SOUTH EAST']
     config:
       group: sales
-      contract:
-        enforced: true
+
+  - name: stg_nations
+    description: Table with nation information
     columns:
       - name: nation_id
-        description: '{{doc("primary_key")}}'
-        data_tests:
-          - not_null
-          - unique
         data_type: int
         constraints:
           - type: not_null
+        description: "{{ doc('primary_key') }}"
+        data_tests:
+          - unique
+          - not_null
       - name: name
         data_type: string
+
+      - name: region_id
+        data_type: int
+        description: "{{ doc('foreign_key') }}"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_regions')
+                field: region_id
       - name: updated_at
         data_type: timestamp
-      - name: region_id
-        data_tests:
-          - relationships:
-              to: ref('stg_regions')
-              field: region_id
-        data_type: int
+      
+
+    config:
+      group: sales
+      contract: 
+        enforced: true 
         
   - name: stg_customers
     config:

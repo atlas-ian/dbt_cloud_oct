@@ -9,7 +9,7 @@ regions as (
 )
 
 select 
-    *
+    c.*, 
 from customers c
 join nations n
     on n.nation_id = c.nation_id

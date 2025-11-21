@@ -31,3 +31,4 @@ left join customer c
     on n.n_nationkey = c.c_nationkey
 group by n.n_name
 order by total_customers desc
+
