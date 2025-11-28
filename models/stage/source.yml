@@ -11,15 +11,23 @@ sources:
         config:
           freshness:
           meta:
-            warn_after: {count: 3, period: day}
-            error_after: {count: 3, period: day}
+            warn_after: { count: 3, period: day }
+            error_after: { count: 3, period: day }
           loaded_at_field: o_orderdate::timestamp_ntz
       - name: lineitems
       - name: parts
       - name: nations
+        columns:
+        - name: nation_id
+          data_type: int
+          # constraints:
+          # - type: not_null
+          description: "{{ doc('primary_key') }}"
+          # data_tests:
+          #   - unique
+          #   - not_null
       - name: suppliers
       - name: partsupps
-
 
   - name: src1
     database: mkmotors_dev

@@ -57,3 +57,11 @@ select EMPLOYEE_NAME from stg_employees
 {% endmacro %}
 
 
+
+{% macro dbt_meta(table_name) -%}
+    '{{invocation_id}}'::varchar as dbt_batch_id,
+    '{{run_started_at}}'::timestamp as dbt_batch_ds
+
+{% endmacro %}
+
+
