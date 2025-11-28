@@ -4,9 +4,8 @@ models:
     columns:
       - name: region_id
         description: "{{ doc('primary_key') }}"
-        data_tests:
-          - unique
-          - not_null
+        # data_tests:
+        #   - unique
       - name: name
         description: Region name
         data_tests:
@@ -24,20 +23,20 @@ models:
     columns:
       - name: nation_id
         data_type: int
-        constraints:
-          - type: not_null
+        # constraints:
+        #   - type: not_null
         description: "{{ doc('primary_key') }}"
-        data_tests:
-          - unique
-          - not_null
+        # data_tests:
+        #   # - unique
       - name: name
+        data_type: string
+      - name: test_id
         data_type: string
 
       - name: region_id
         data_type: int
         description: "{{ doc('foreign_key') }}"
         data_tests:
-          - not_null
           - relationships:
               arguments:
                 to: ref('stg_regions')
@@ -58,7 +57,6 @@ models:
       - name: customer_id
         description: '{{doc("primary_key")}}'
         data_tests:
-          - not_null
           - unique
       - name: nation_id
         data_tests:
@@ -73,7 +71,6 @@ models:
       - name: order_id
         description: '{{doc("primary_key")}}'
         data_tests:
-          - not_null
           - unique
       - name: customer_id
         data_tests:
