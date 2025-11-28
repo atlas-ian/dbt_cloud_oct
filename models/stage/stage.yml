@@ -1,11 +1,18 @@
+version: 2
+
 models:
+
+  # -----------------------------
+  # stg_regions
+  # -----------------------------
   - name: stg_regions
     description: Table with all region information
+    config:
+      group: sales
+
     columns:
       - name: region_id
         description: "{{ doc('primary_key') }}"
-        # data_tests:
-        #   - unique
       - name: name
         description: Region name
         data_tests:
@@ -15,22 +22,29 @@ models:
                 schema: error
               arguments:
                 values: ['ASIA', 'AFRICA', 'AMERICA', 'EUROPE', 'MIDDLE EAST', 'SOUTH EAST']
-    config:
-      group: sales
+      - name: DBT_BATCH_ID
+        data_type: string
 
+      - name: DBT_BATCH_DS
+        data_type: timestamp
+
+
+  # -----------------------------
+  # stg_nations
+  # -----------------------------
   - name: stg_nations
     description: Table with nation information
+    config:
+      group: sales
+      contract:
+        enforced: true   # strict column matching
+
     columns:
       - name: nation_id
         data_type: int
-        # constraints:
-        #   - type: not_null
         description: "{{ doc('primary_key') }}"
-        # data_tests:
-        #   # - unique
+
       - name: name
-        data_type: string
-      - name: test_id
         data_type: string
 
       - name: region_id
@@ -41,23 +55,34 @@ models:
               arguments:
                 to: ref('stg_regions')
                 field: region_id
+
       - name: updated_at
         data_type: timestamp
 
+      # - name: DBT_BATCH_ID
+      #   data_type: string
 
-    config:
-      group: sales
-      contract:
-        enforced: true
+      # - name: DBT_BATCH_DS
+      #   data_type: timestamp
 
+      # - name: TEST_ID
+      #   data_type: string
+
+
+  # -----------------------------
+  # stg_customers
+  # -----------------------------
   - name: stg_customers
+    description: Customer staging table
     config:
       group: sales
+
     columns:
       - name: customer_id
-        description: '{{doc("primary_key")}}'
+        description: "{{ doc('primary_key') }}"
         data_tests:
           - unique
+
       - name: nation_id
         data_tests:
           - relationships:
@@ -66,20 +91,26 @@ models:
               arguments:
                 to: ref('stg_nations')
                 field: nation_id
+
+
+  # -----------------------------
+  # stg_orders
+  # -----------------------------
   - name: stg_orders
     columns:
       - name: order_id
-        description: '{{doc("primary_key")}}'
+        description: "{{ doc('primary_key') }}"
         data_tests:
           - unique
+
       - name: customer_id
         data_tests:
           - relationships:
+              config:
+                store_failures: true
               arguments:
                 to: ref('stg_customers')
                 field: customer_id
-              config:
-                store_failures: true
 
       - name: status_code
         data_tests:
@@ -88,13 +119,24 @@ models:
                 store_failures: true
               arguments:
                 values: ["F", "O", "P", "B"]
+
+
+  # -----------------------------
+  # stg_line_items
+  # -----------------------------
   - name: stg_line_items
     description: Table with all line item information
+
     columns:
       - name: order_item_id
-        description: '{{doc("primary_key")}}'
+        description: "{{ doc('primary_key') }}"
+
+
+# -----------------------------
+# Seeds
+# -----------------------------
 seeds:
   - name: suppliers
     config:
       meta:
-        +alias: suppliers_name
+        alias: suppliers_name
